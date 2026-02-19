@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GridX Platform - Links</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .logo span:first-child {
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+        
+        .logo span:last-child {
+            color: #ffff00;
+            text-shadow: 0 0 10px #ffff00;
+        }
+        
+        .subtitle {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .links-section {
+            background: rgba(20, 25, 50, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            color: #00ff00;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .link-item {
+            margin-bottom: 12px;
+        }
+        
+        .link-label {
+            color: #ffff00;
+            font-size: 12px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        
+        a {
+            display: inline-block;
+            padding: 10px 15px;
+            background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+            color: #000;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+        
+        a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 0, 0.4);
+        }
+        
+        .credentials {
+            background: rgba(20, 25, 50, 0.8);
+            border: 2px solid #ffff00;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .cred-title {
+            color: #ffff00;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        .cred-item {
+            margin-bottom: 10px;
+        }
+        
+        .cred-label {
+            color: #888;
+            font-size: 12px;
+        }
+        
+        .cred-value {
+            color: #00ff00;
+            font-weight: bold;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        .status {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            color: #00ff00;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .status.offline {
+            background: rgba(255, 0, 0, 0.1);
+            border-color: #ff0000;
+            color: #ff0000;
+        }
+        
+        .warning {
+            background: rgba(255, 255, 0, 0.1);
+            border: 1px solid #ffff00;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            color: #ffff00;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <span>GridX</span> <span>Energy</span>
+            </div>
+            <p class="subtitle">Decentralized AI Renewable Energy Trading Platform</p>
+        </div>
+        
+        <div id="status" class="status">
+            ⏳ Checking services...
+        </div>
+        
+        <div class="credentials">
+            <div class="cred-title">📝 Demo Credentials</div>
+            <div class="cred-item">
+                <div class="cred-label">Email:</div>
+                <div class="cred-value">arjun@solargrid.in</div>
+            </div>
+            <div class="cred-item">
+                <div class="cred-label">Password:</div>
+                <div class="cred-value">password123</div>
+            </div>
+        </div>
+        
+        <div class="links-section">
+            <div class="section-title">🌐 Frontend</div>
+            <div class="link-item">
+                <div class="link-label">Dashboard (Auto-redirects to Login)</div>
+                <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>
+            </div>
+            <div class="link-item">
+                <div class="link-label">Login Page</div>
+                <a href="http://localhost:3000/login" target="_blank">http://localhost:3000/login</a>
+            </div>
+            <div class="link-item">
+                <div class="link-label">Register Page</div>
+                <a href="http://localhost:3000/register" target="_blank">http://localhost:3000/register</a>
+            </div>
+        </div>
+        
+        <div class="links-section">
+            <div class="section-title">⚙️ Backend API</div>
+            <div class="link-item">
+                <div class="link-label">API Health Check</div>
+                <a href="http://localhost:3001/health" target="_blank">http://localhost:3001/health</a>
+            </div>
+            <div class="link-item">
+                <div class="link-label">Login Endpoint (POST)</div>
+                <a href="http://localhost:3001/api/auth/login" target="_blank">http://localhost:3001/api/auth/login</a>
+            </div>
+            <div class="link-item">
+                <div class="link-label">Register Endpoint (POST)</div>
+                <a href="http://localhost:3001/api/auth/register" target="_blank">http://localhost:3001/api/auth/register</a>
+            </div>
+        </div>
+        
+        <div class="warning">
+            ⚠️ <strong>Make sure both services are running:</strong><br>
+            Terminal 1: <code>cd gridx-backend && npm run dev</code><br>
+            Terminal 2: <code>cd gridx-frontend && npm run dev</code>
+        </div>
+    </div>
+    
+    <script>
+        async function checkStatus() {
+            const statusDiv = document.getElementById('status');
+            try {
+                const response = await fetch('http://localhost:3001/health');
+                if (response.ok) {
+                    statusDiv.innerHTML = '✅ All services running!';
+                    statusDiv.classList.remove('offline');
+                } else {
+                    statusDiv.innerHTML = '❌ Backend not responding';
+                    statusDiv.classList.add('offline');
+                }
+            } catch (error) {
+                statusDiv.innerHTML = '❌ Services not running - Start terminals first!';
+                statusDiv.classList.add('offline');
+            }
+        }
+        
+        checkStatus();
+        setInterval(checkStatus, 5000);
+    </script>
+</body>
+</html>

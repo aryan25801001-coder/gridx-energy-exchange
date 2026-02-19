@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # Database
+  db:
+    image: postgres:15-alpine
+    container_name: gridx-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: gridx
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # AI Microservice
+  ai-service:
+    build: ./gridx-ai
+    container_name: gridx-ai
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+
+  # Backend API
+  backend:
+    build: ./gridx-backend
+    container_name: gridx-api
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+      - ai-service
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=gridx
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - PORT=3001
+      - AI_SERVICE_URL=http://ai-service:8000
+
+  # Frontend
+  frontend:
+    build: ./gridx-frontend
+    container_name: gridx-web
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
