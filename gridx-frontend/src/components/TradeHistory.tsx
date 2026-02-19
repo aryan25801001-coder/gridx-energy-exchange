@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { api } from "@/lib/api";
-import { BiLayer, BiShieldCheck, BiLink } from "react-icons/bi";
+import { BiLayer, BiCheckCircle, BiLink } from "react-icons/bi";
 import { motion } from "framer-motion";
 
 interface Trade {
@@ -126,7 +126,7 @@ export default function TradeHistory() {
                     </td>
                     <td className="px-6 py-5">
                       <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-green-950 bg-opacity-30 border border-neon-green border-opacity-20">
-                        <BiShieldCheck className="text-neon-green text-xs" />
+                        <BiCheckCircle className="text-neon-green text-xs" />
                         <span className="text-[9px] font-black text-neon-green uppercase tracking-tighter">On-Chain Verified</span>
                       </div>
                     </td>
