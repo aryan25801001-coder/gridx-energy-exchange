@@ -9,6 +9,7 @@ import EnergyMarket from "./EnergyMarket";
 import TradeHistory from "./TradeHistory";
 import CarbonLeaderboard from "./CarbonLeaderboard";
 import SolarChart from "./SolarChart";
+import BuySell from "./BuySell";
 import { FiRefreshCw, FiZap, FiSun, FiTrendingUp, FiActivity } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -154,6 +155,9 @@ export default function MainContent() {
               />
               <CarbonCounter />
             </div>
+
+            {/* Buy & Sell Section */}
+            <BuySell />
 
             {/* Analytics Row */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
