@@ -92,11 +92,27 @@
             transition: all 0.3s ease;
             width: 100%;
             text-align: center;
+            font-size: 13px;
         }
         
         a:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(0, 255, 0, 0.4);
+        }
+
+        .frontend-status {
+            color: #ffff00;
+            font-size: 11px;
+            margin-top: 5px;
+            font-family: monospace;
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 12px;
         }
         
         .credentials {
@@ -186,10 +202,15 @@
         </div>
         
         <div class="links-section">
-            <div class="section-title">🌐 Frontend</div>
+            <div class="section-title">🌐 Frontend (Next.js)</div>
+            <p style="color: #888; font-size: 12px; margin-bottom: 15px;">Automatically finds available port (3000-3004)</p>
             <div class="link-item">
                 <div class="link-label">Dashboard (Auto-redirects to Login)</div>
                 <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>
+            </div>
+            <div class="link-item">
+                <div class="link-label">Dashboard (Fallback Port 3004)</div>
+                <a href="http://localhost:3004" target="_blank">http://localhost:3004</a>
             </div>
             <div class="link-item">
                 <div class="link-label">Login Page</div>
@@ -199,47 +220,129 @@
                 <div class="link-label">Register Page</div>
                 <a href="http://localhost:3000/register" target="_blank">http://localhost:3000/register</a>
             </div>
+            <div class="link-item">
+                <div class="link-label">Transfer Page (Energy Trading)</div>
+                <a href="http://localhost:3000/transfer" target="_blank">http://localhost:3000/transfer</a>
+            </div>
         </div>
         
         <div class="links-section">
-            <div class="section-title">⚙️ Backend API</div>
+            <div class="section-title">⚙️ Backend API (Express.js)</div>
+            <p style="color: #888; font-size: 12px; margin-bottom: 15px;">Default: 3001 | Tests with mock auth fallback</p>
             <div class="link-item">
                 <div class="link-label">API Health Check</div>
                 <a href="http://localhost:3001/health" target="_blank">http://localhost:3001/health</a>
             </div>
             <div class="link-item">
-                <div class="link-label">Login Endpoint (POST)</div>
-                <a href="http://localhost:3001/api/auth/login" target="_blank">http://localhost:3001/api/auth/login</a>
+                <div class="link-label">Get All Users</div>
+                <a href="http://localhost:3001/api/users" target="_blank">http://localhost:3001/api/users</a>
             </div>
             <div class="link-item">
-                <div class="link-label">Register Endpoint (POST)</div>
-                <a href="http://localhost:3001/api/auth/register" target="_blank">http://localhost:3001/api/auth/register</a>
+                <div class="link-label">Get All Trades</div>
+                <a href="http://localhost:3001/api/energy-trades" target="_blank">http://localhost:3001/api/energy-trades</a>
+            </div>
+            <div class="link-item">
+                <div class="link-label">AI Forecast</div>
+                <a href="http://localhost:3001/api/ai/forecast" target="_blank">http://localhost:3001/api/ai/forecast</a>
+            </div>
+            <div class="link-item">
+                <div class="link-label">Carbon Leaderboard</div>
+                <a href="http://localhost:3001/api/carbon-wallet/leaderboard" target="_blank">http://localhost:3001/api/carbon-wallet/leaderboard</a>
+            </div>
+        </div>
+
+        <div class="links-section">
+            <div class="section-title">📚 Documentation & Repository</div>
+            <div class="link-item">
+                <div class="link-label">GitHub Repository</div>
+                <a href="https://github.com/aryan25801001-coder/gridx-energy-exchange" target="_blank">📦 gridx-energy-exchange</a>
+            </div>
+            <div class="link-item">
+                <div class="link-label">Project README</div>
+                <a href="file:///C:/Users/aarya/Desktop/haryana/README.md" target="_blank">📖 README.md</a>
+            </div>
+            <div class="link-item">
+                <div class="link-label">Environment Setup Guide</div>
+                <a href="file:///C:/Users/aarya/Desktop/haryana/ENV_SETUP.md" target="_blank">🔧 ENV_SETUP.md</a>
+            </div>
+            <div class="link-item">
+                <div class="link-label">Authentication Setup</div>
+                <a href="file:///C:/Users/aarya/Desktop/haryana/AUTH_SETUP.md" target="_blank">🔐 AUTH_SETUP.md</a>
             </div>
         </div>
         
         <div class="warning">
-            ⚠️ <strong>Make sure both services are running:</strong><br>
-            Terminal 1: <code>cd gridx-backend && npm run dev</code><br>
-            Terminal 2: <code>cd gridx-frontend && npm run dev</code>
+            <strong>⚠️ Quick Start (Copy & Paste):</strong><br><br>
+            <strong>Terminal 1 - Backend:</strong><br>
+            <code>cd C:\Users\aarya\Desktop\haryana\gridx-backend && npm run dev</code><br><br>
+            <strong>Terminal 2 - Frontend:</strong><br>
+            <code>cd C:\Users\aarya\Desktop\haryana\gridx-frontend && npm run dev</code><br><br>
+            Then open: http://localhost:3000 (or 3004 if busy)
         </div>
     </div>
     
     <script>
+        async function checkServiceStatus(port) {
+            try {
+                const response = await fetch(`http://localhost:${port}/health`, { 
+                    method: 'GET',
+                    mode: 'no-cors',
+                    timeout: 2000 
+                });
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        async function checkFrontendStatus() {
+            const ports = [3000, 3001, 3002, 3003, 3004];
+            for (const port of ports) {
+                try {
+                    const response = await fetch(`http://localhost:${port}/`, { 
+                        method: 'GET',
+                        mode: 'no-cors',
+                        timeout: 1000 
+                    });
+                    return port;
+                } catch (error) {
+                    continue;
+                }
+            }
+            return null;
+        }
+
         async function checkStatus() {
             const statusDiv = document.getElementById('status');
+            
+            let backendStatus = false;
+            let frontendPort = null;
+
             try {
-                const response = await fetch('http://localhost:3001/health');
-                if (response.ok) {
-                    statusDiv.innerHTML = '✅ All services running!';
-                    statusDiv.classList.remove('offline');
-                } else {
-                    statusDiv.innerHTML = '❌ Backend not responding';
-                    statusDiv.classList.add('offline');
-                }
-            } catch (error) {
-                statusDiv.innerHTML = '❌ Services not running - Start terminals first!';
+                backendStatus = await checkServiceStatus(3001);
+            } catch (e) {}
+
+            try {
+                frontendPort = await checkFrontendStatus();
+            } catch (e) {}
+
+            let statusHTML = '';
+            
+            if (backendStatus && frontendPort) {
+                statusHTML = `✅ All services running! Frontend: :${frontendPort} | Backend: :3001`;
+                statusDiv.classList.remove('offline');
+            } else if (frontendPort) {
+                statusHTML = `⚠️ Frontend running (:${frontendPort}) | Backend offline`;
+                statusDiv.classList.add('offline');
+            } else if (backendStatus) {
+                statusHTML = `⚠️ Backend running (:3001) | Frontend offline`;
+                statusDiv.classList.add('offline');
+            } else {
+                statusHTML = '❌ Services not running - Start terminals first!';
                 statusDiv.classList.add('offline');
             }
+
+            statusDiv.innerHTML = statusHTML;
         }
         
         checkStatus();
