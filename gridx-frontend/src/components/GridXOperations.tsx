@@ -68,6 +68,25 @@ export default function GridXOperations() {
 
   const [refreshing, setRefreshing] = useState(false);
 
+  useEffect(() => {
+    // Update operations with random data every 2 seconds
+    const interval = setInterval(() => {
+      setOperations((prev) =>
+        prev.map((op) => {
+          const rand = Math.random();
+          return {
+            ...op,
+            status: rand > 0.9 ? "pending" : rand > 0.95 ? "error" : "active",
+            uptime: Math.max(97, Math.min(100, op.uptime + (Math.random() - 0.5) * 0.5)),
+            responseTime: Math.max(10, op.responseTime + (Math.random() - 0.5) * 80),
+            lastSync: Math.random() > 0.3 ? "Just now" : `${Math.floor(Math.random() * 5) + 1}s ago`,
+          };
+        })
+      );
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
   const handleRefresh = async () => {
     setRefreshing(true);
     // Simulate refresh

@@ -1,11 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BiRefresh, BiNetworkChart } from "react-icons/bi";
 import { motion } from "framer-motion";
 
 export default function SyncGrid() {
   const [syncing, setSyncing] = useState(false);
+  const [production, setProduction] = useState(42.5);
+  const [consumption, setConsumption] = useState(48.2);
+  const [balance, setBalance] = useState(-5.7);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newProduction = Math.max(20, 42.5 + (Math.random() - 0.5) * 30);
+      const newConsumption = Math.max(35, 48.2 + (Math.random() - 0.5) * 25);
+      setProduction(parseFloat(newProduction.toFixed(1)));
+      setConsumption(parseFloat(newConsumption.toFixed(1)));
+      setBalance(parseFloat((newProduction - newConsumption).toFixed(1)));
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSync = () => {
     setSyncing(true);
@@ -32,20 +46,20 @@ export default function SyncGrid() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <motion.div key={`prod-${production}`} initial={{ scale: 1.05 }} animate={{ scale: 1 }} className="bg-gray-900 border border-gray-800 rounded-xl p-4">
           <p className="text-[10px] font-black text-gray-500 uppercase mb-2">Production</p>
-          <p className="text-3xl font-black text-neon-green">42.5 <span className="text-sm text-gray-400">kW</span></p>
-        </div>
+          <p className="text-3xl font-black text-neon-green">{production} <span className="text-sm text-gray-400">kW</span></p>
+        </motion.div>
 
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <motion.div key={`cons-${consumption}`} initial={{ scale: 1.05 }} animate={{ scale: 1 }} className="bg-gray-900 border border-gray-800 rounded-xl p-4">
           <p className="text-[10px] font-black text-gray-500 uppercase mb-2">Consumption</p>
-          <p className="text-3xl font-black text-neon-cyan">48.2 <span className="text-sm text-gray-400">kW</span></p>
-        </div>
+          <p className="text-3xl font-black text-neon-cyan">{consumption} <span className="text-sm text-gray-400">kW</span></p>
+        </motion.div>
 
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <motion.div key={`bal-${balance}`} initial={{ scale: 1.05 }} animate={{ scale: 1 }} className="bg-gray-900 border border-gray-800 rounded-xl p-4">
           <p className="text-[10px] font-black text-gray-500 uppercase mb-2">Balance</p>
-          <p className="text-3xl font-black text-neon-yellow">-5.7 <span className="text-sm text-gray-400">kW</span></p>
-        </div>
+          <p className={`text-3xl font-black ${balance > 0 ? 'text-neon-green' : 'text-neon-yellow'}`}>{balance > 0 ? '+' : ''}{balance} <span className="text-sm text-gray-400">kW</span></p>
+        </motion.div>
       </div>
 
       <div>

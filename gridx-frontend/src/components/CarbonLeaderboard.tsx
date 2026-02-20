@@ -19,6 +19,17 @@ export default function CarbonLeaderboard() {
 
   useEffect(() => {
     loadLeaderboard();
+    // Update leaderboard with random changes every 4 seconds
+    const interval = setInterval(() => {
+      setLeaderboard((prev) =>
+        prev.map((entry) => ({
+          ...entry,
+          balance: Math.round(entry.balance + (Math.random() - 0.3) * 500),
+          total_earned: entry.total_earned + Math.round(Math.random() * 200),
+        }))
+      );
+    }, 4000);
+    return () => clearInterval(interval);
   }, []);
 
   const loadLeaderboard = async () => {

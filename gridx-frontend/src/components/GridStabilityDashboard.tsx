@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { FiZap, FiTrendingUp, FiActivity } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
-import io, { Socket } from "socket.io-client";
 
 interface GridMetrics {
   supply: number;
@@ -15,7 +14,6 @@ interface GridMetrics {
 }
 
 export default function GridStabilityDashboard() {
-  const [socket, setSocket] = useState<Socket | null>(null);
   const [metrics, setMetrics] = useState<GridMetrics>({
     supply: 0,
     demand: 0,
@@ -28,37 +26,47 @@ export default function GridStabilityDashboard() {
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
-    // Initialize Socket.io connection
-    const newSocket = io("http://localhost:3001", {
-      reconnection: true,
-      reconnectionDelay: 1000,
-      reconnectionDelayMax: 5000,
-      reconnectionAttempts: 5,
-    });
-
-    newSocket.on("connect", () => {
-      setConnected(true);
-      console.log("🔌 Connected to Grid Stability updates");
-    });
-
-    newSocket.on("GRID_UPDATE", (data: GridMetrics) => {
-      setMetrics(data);
-      setPriceHistory((prev) => {
-        const updated = [...prev, data.updatedPrice];
-        return updated.slice(-20); // Keep last 20 prices
-      });
-    });
-
-    newSocket.on("disconnect", () => {
-      setConnected(false);
-      console.log("❌ Disconnected from Grid Stability updates");
-    });
-
-    setSocket(newSocket);
-
-    return () => {
-      newSocket.disconnect();
+    // Initialize with random data
+    const generateRandomMetrics = () => {
+      const supply = Math.max(30, 50 + (Math.random() - 0.5) * 40);
+      const demand = Math.max(35, 55 + (Math.random() - 0.5) * 35);
+      const imbalance = supply - demand;
+      let gridStatus: "Balanced" | "Oversupply" | "Shortage" = "Balanced";
+      
+      if (Math.abs(imbalance) > 5) {
+        gridStatus = imbalance > 0 ? "Oversupply" : "Shortage";
+      }
+      
+      const basePrice = 6;
+      const elasticity = 0.15;
+      const updatedPrice = Math.max(3, Math.min(12, basePrice + elasticity * imbalance));
+      
+      return {
+        supply: parseFloat(supply.toFixed(2)),
+        demand: parseFloat(demand.toFixed(2)),
+        imbalance: parseFloat(imbalance.toFixed(2)),
+        gridStatus,
+        updatedPrice: parseFloat(updatedPrice.toFixed(2)),
+        timestamp: new Date().toISOString(),
+      };
     };
+
+    setConnected(true);
+    const initialMetrics = generateRandomMetrics();
+    setMetrics(initialMetrics);
+    setPriceHistory([initialMetrics.updatedPrice]);
+
+    // Update with random data every 3 seconds
+    const interval = setInterval(() => {
+      const newMetrics = generateRandomMetrics();
+      setMetrics(newMetrics);
+      setPriceHistory((prev) => {
+        const updated = [...prev, newMetrics.updatedPrice];
+        return updated.slice(-20);
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const getStatusColor = (status: string) => {
