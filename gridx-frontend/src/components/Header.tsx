@@ -5,6 +5,7 @@ import { useStore } from "@/lib/store";
 import { FiSun, FiZap, FiSettings, FiBell, FiShield, FiServer, FiRadio } from "react-icons/fi";
 import { BiLeaf, BiNetworkChart, BiChevronDown, BiChip } from "react-icons/bi";
 import { motion } from "framer-motion";
+import LiveMarketplace from "./LiveMarketplace";
 
 export default function Header() {
   const { user, isDisasterMode } = useStore();
@@ -23,6 +24,9 @@ export default function Header() {
       className={`h-20 sticky top-0 z-50 transition-all duration-300 ${scrolled ? "bg-black bg-opacity-80 backdrop-blur-lg border-b border-gray-800" : "bg-primary border-b border-gray-900"
         }`}
     >
+      {/* Live Marketplace */}
+      <LiveMarketplace />
+      
       <div className="max-w-[1600px] mx-auto px-8 h-full flex items-center justify-between">
         {/* Logo Section */}
         <div className="flex items-center gap-8">

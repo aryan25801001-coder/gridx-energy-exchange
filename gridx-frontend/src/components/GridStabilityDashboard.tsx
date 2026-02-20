@@ -25,48 +25,9 @@ export default function GridStabilityDashboard() {
   const [priceHistory, setPriceHistory] = useState<number[]>([6]);
   const [connected, setConnected] = useState(false);
 
+  // Static data - no auto-updates
   useEffect(() => {
-    // Initialize with random data
-    const generateRandomMetrics = () => {
-      const supply = Math.max(30, 50 + (Math.random() - 0.5) * 40);
-      const demand = Math.max(35, 55 + (Math.random() - 0.5) * 35);
-      const imbalance = supply - demand;
-      let gridStatus: "Balanced" | "Oversupply" | "Shortage" = "Balanced";
-      
-      if (Math.abs(imbalance) > 5) {
-        gridStatus = imbalance > 0 ? "Oversupply" : "Shortage";
-      }
-      
-      const basePrice = 6;
-      const elasticity = 0.15;
-      const updatedPrice = Math.max(3, Math.min(12, basePrice + elasticity * imbalance));
-      
-      return {
-        supply: parseFloat(supply.toFixed(2)),
-        demand: parseFloat(demand.toFixed(2)),
-        imbalance: parseFloat(imbalance.toFixed(2)),
-        gridStatus,
-        updatedPrice: parseFloat(updatedPrice.toFixed(2)),
-        timestamp: new Date().toISOString(),
-      };
-    };
-
     setConnected(true);
-    const initialMetrics = generateRandomMetrics();
-    setMetrics(initialMetrics);
-    setPriceHistory([initialMetrics.updatedPrice]);
-
-    // Update with random data every 3 seconds
-    const interval = setInterval(() => {
-      const newMetrics = generateRandomMetrics();
-      setMetrics(newMetrics);
-      setPriceHistory((prev) => {
-        const updated = [...prev, newMetrics.updatedPrice];
-        return updated.slice(-20);
-      });
-    }, 3000);
-
-    return () => clearInterval(interval);
   }, []);
 
   const getStatusColor = (status: string) => {
