@@ -72,7 +72,7 @@ export default function LiveMarketplace() {
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="absolute top-0 left-0 mt-12 ml-2 w-72 bg-gradient-to-br from-gray-900 to-black border-2 border-neon-cyan rounded-xl p-5 shadow-2xl shadow-neon-cyan/20"
+      className="absolute top-0 right-0 mt-12 mr-2 w-72 bg-gradient-to-br from-gray-900 to-black border-2 border-neon-cyan rounded-xl p-5 shadow-2xl shadow-neon-cyan/20"
     >
       {/* Header */}
       <div className="flex items-center gap-2 mb-4">
