@@ -20,14 +20,19 @@ export default function LiveMarketplace() {
     { minUnits: 50.1, maxUnits: 100, basePrice: 10.5, color: "text-red-400" },    // 50.1-100 units: ₹10.5
   ];
 
+  // Market adjustment factor - CHANGE THIS VALUE TO ADJUST PRICES
+  // Range: 0.98-1.02 (minimal fluctuation, ±2%)
+  // To increase fluctuation: Change 0.98 + Math.random() * 0.04 to higher range
+  // Example: 0.80 + Math.random() * 0.40 for ±20% fluctuation
+
   const [selectedUnits, setSelectedUnits] = useState(5);
   const [demandMultiplier, setDemandMultiplier] = useState(1);
 
-  // Simulate live market demand changes every 5 seconds
+  // Simulate live market demand changes every 5 seconds with minimal fluctuation
   useEffect(() => {
     const interval = setInterval(() => {
-      // Random demand between 0.8x and 1.3x
-      setDemandMultiplier(parseFloat((0.8 + Math.random() * 0.5).toFixed(2)));
+      // Minimal random demand between 0.98x and 1.02x (very stable)
+      setDemandMultiplier(parseFloat((0.98 + Math.random() * 0.04).toFixed(3)));
     }, 5000);
     return () => clearInterval(interval);
   }, []);
@@ -153,7 +158,7 @@ export default function LiveMarketplace() {
           />
         </div>
         <p className="text-[8px] text-gray-500 mt-2">
-          Price adjusts automatically based on live market demand
+          Live market adjustment: {(demandMultiplier * 100).toFixed(1)}% (minimal variance)
         </p>
       </div>
     </motion.div>
