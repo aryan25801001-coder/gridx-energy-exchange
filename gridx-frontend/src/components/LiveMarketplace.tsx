@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { FiTrendingUp, FiZap } from "react-icons/fi";
 import { motion } from "framer-motion";
+import { calculateDemandMultiplier, calculateLivePrice } from "@/lib/pricing";
 
 interface PriceTier {
   minUnits: number;
@@ -26,17 +27,13 @@ export default function LiveMarketplace() {
   // Example: 0.80 + Math.random() * 0.40 for ±20% fluctuation
 
   const [selectedUnits, setSelectedUnits] = useState(5);
-  const [demandMultiplier, setDemandMultiplier] = useState(1);
+  const [demandMultiplier, setDemandMultiplier] = useState(calculateDemandMultiplier());
 
   // Simulate live market demand changes every 3 seconds (SYNCED with GridStabilityDashboard)
-  // Uses time-based formula to ensure consistency across components
+  // Uses shared pricing calculation for consistency
   useEffect(() => {
     const updateMultiplier = () => {
-      // Calculate based on current time interval for consistency
-      const now = Date.now();
-      const cycle = Math.floor(now / 3000); // 3-second cycle
-      const seed = Math.sin(cycle * 0.73) * 0.95 + 1.0; // Stable deterministic value
-      setDemandMultiplier(Math.max(0.98, Math.min(1.02, parseFloat(seed.toFixed(3)))));
+      setDemandMultiplier(calculateDemandMultiplier());
     };
 
     updateMultiplier(); // Initial update
@@ -44,14 +41,17 @@ export default function LiveMarketplace() {
     return () => clearInterval(interval);
   }, []);
 
-  // Calculate price based on selected units and demand
+  // Calculate price based on selected units and demand (SYNCED with GridStabilityDashboard)
   const getPrice = (units: number): { price: number; tier: string; color: string } => {
+    // Use shared live price calculation (SYNCED with GridStabilityDashboard)
+    const livePrice = calculateLivePrice(demandMultiplier);
     const applicableTier = priceTiers.find(
       (tier) => units >= tier.minUnits && units <= tier.maxUnits
     ) || priceTiers[0];
 
-    const demandAdjustedPrice = applicableTier.basePrice * demandMultiplier;
-    const finalPrice = parseFloat(demandAdjustedPrice.toFixed(2));
+    // Apply tier multiplier on top of live base price for proper tier pricing
+    const tierMultiplier = applicableTier.basePrice / 5.2; // Relative to base price
+    const finalPrice = parseFloat((livePrice * tierMultiplier).toFixed(2));
 
     let tierName = "Standard";
     if (applicableTier.basePrice === 6.5) tierName = "Premium";

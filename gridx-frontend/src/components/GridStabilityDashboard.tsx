@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { FiZap, FiTrendingUp, FiActivity } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
+import { calculateDemandMultiplier, calculateLivePrice } from "@/lib/pricing";
 
 interface GridMetrics {
   supply: number;
@@ -26,7 +27,7 @@ export default function GridStabilityDashboard() {
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
-    // Generate random metrics
+    // Use shared pricing calculation for both components
     const generateRandomMetrics = () => {
       const supply = Math.max(30, 50 + (Math.random() - 0.5) * 40);
       const demand = Math.max(35, 55 + (Math.random() - 0.5) * 35);
@@ -37,16 +38,16 @@ export default function GridStabilityDashboard() {
         gridStatus = imbalance > 0 ? "Oversupply" : "Shortage";
       }
       
-      const basePrice = 6;
-      const elasticity = 0.15;
-      const updatedPrice = Math.max(3, Math.min(12, basePrice + elasticity * imbalance));
+      // Use shared pricing calculation - same as LiveMarketplace
+      const demandMultiplier = calculateDemandMultiplier();
+      const updatedPrice = calculateLivePrice(demandMultiplier);
       
       return {
         supply: parseFloat(supply.toFixed(2)),
         demand: parseFloat(demand.toFixed(2)),
         imbalance: parseFloat(imbalance.toFixed(2)),
         gridStatus,
-        updatedPrice: parseFloat(updatedPrice.toFixed(2)),
+        updatedPrice,
         timestamp: new Date().toISOString(),
       };
     };
