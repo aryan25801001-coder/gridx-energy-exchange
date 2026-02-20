@@ -28,12 +28,19 @@ export default function LiveMarketplace() {
   const [selectedUnits, setSelectedUnits] = useState(5);
   const [demandMultiplier, setDemandMultiplier] = useState(1);
 
-  // Simulate live market demand changes every 5 seconds with minimal fluctuation
+  // Simulate live market demand changes every 3 seconds (SYNCED with GridStabilityDashboard)
+  // Uses time-based formula to ensure consistency across components
   useEffect(() => {
-    const interval = setInterval(() => {
-      // Minimal random demand between 0.98x and 1.02x (very stable)
-      setDemandMultiplier(parseFloat((0.98 + Math.random() * 0.04).toFixed(3)));
-    }, 5000);
+    const updateMultiplier = () => {
+      // Calculate based on current time interval for consistency
+      const now = Date.now();
+      const cycle = Math.floor(now / 3000); // 3-second cycle
+      const seed = Math.sin(cycle * 0.73) * 0.95 + 1.0; // Stable deterministic value
+      setDemandMultiplier(Math.max(0.98, Math.min(1.02, parseFloat(seed.toFixed(3)))));
+    };
+
+    updateMultiplier(); // Initial update
+    const interval = setInterval(updateMultiplier, 3000);
     return () => clearInterval(interval);
   }, []);
 
