@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useStore } from "@/lib/store";
-import { FiSun, FiZap, FiSettings, FiBell, FiShield } from "react-icons/fi";
-import { BiLeaf, BiNetworkChart, BiChevronDown } from "react-icons/bi";
+import { FiSun, FiZap, FiSettings, FiBell, FiShield, FiServer, FiRadio } from "react-icons/fi";
+import { BiLeaf, BiNetworkChart, BiChevronDown, BiChip } from "react-icons/bi";
 import { motion } from "framer-motion";
 
 export default function Header() {
@@ -44,9 +44,9 @@ export default function Header() {
           </div>
 
           <nav className="hidden lg:flex items-center gap-1 bg-gray-900 bg-opacity-50 p-1 rounded-xl border border-gray-800">
-            <HeaderTab label="Mainnet" active />
-            <HeaderTab label="Mumbai" />
-            <HeaderTab label="AI Node" />
+            <HeaderTab label="Mainnet" icon={<FiServer className="text-neon-green" />} active />
+            <HeaderTab label="Mumbai" icon={<FiRadio className="text-gray-500" />} />
+            <HeaderTab label="AI Node" icon={<BiChip className="text-gray-500" />} />
           </nav>
         </div>
 
@@ -97,10 +97,11 @@ export default function Header() {
   );
 }
 
-function HeaderTab({ label, active = false }: { label: string; active?: boolean }) {
+function HeaderTab({ label, icon, active = false }: { label: string; icon?: React.ReactNode; active?: boolean }) {
   return (
-    <button className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${active ? "bg-gray-800 text-neon-green shadow-sm" : "text-gray-600 hover:text-gray-300"
+    <button className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 ${active ? "bg-gray-800 text-neon-green shadow-sm" : "text-gray-600 hover:text-gray-300"
       }`}>
+      {icon && <span className={`text-xs ${active ? "text-neon-green" : "text-gray-500"}`}>{icon}</span>}
       {label}
     </button>
   );

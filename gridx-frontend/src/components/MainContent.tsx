@@ -10,6 +10,10 @@ import TradeHistory from "./TradeHistory";
 import CarbonLeaderboard from "./CarbonLeaderboard";
 import SolarChart from "./SolarChart";
 import BuySell from "./BuySell";
+import GridXOperations from "./GridXOperations";
+import SyncGrid from "./SyncGrid";
+import GridStabilityDashboard from "./GridStabilityDashboard";
+import MeterDashboard from "./MeterDashboard";
 import { FiRefreshCw, FiZap, FiSun, FiTrendingUp, FiActivity } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -123,6 +127,14 @@ export default function MainContent() {
             )}
           </div>
         );
+      case "operations":
+        return <GridXOperations />;
+      case "sync-grid":
+        return <SyncGrid />;
+      case "grid-stability":
+        return <GridStabilityDashboard />;
+      case "meters":
+        return <MeterDashboard />;
       case "dashboard":
       default:
         return (

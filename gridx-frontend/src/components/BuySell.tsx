@@ -1,14 +1,33 @@
 "use client";
 
 import React, { useState } from "react";
-import { FiZap, FiArrowRight } from "react-icons/fi";
+import { FiZap, FiArrowRight, FiCheckCircle, FiUploadCloud } from "react-icons/fi";
 import { motion } from "framer-motion";
 
 export default function BuySell() {
   const [amount, setAmount] = useState(5);
   const [activeTab, setActiveTab] = useState<"buy" | "sell">("buy");
+  const [buyingStatus, setBuyingStatus] = useState(false);
+  const [sellingStatus, setSellingStatus] = useState(false);
   const price = 5.20;
   const total = amount * price;
+
+  const handleCompletePurchase = () => {
+    setBuyingStatus(true);
+    setTimeout(() => {
+      alert(`✅ Successfully purchased ${amount} kWh for ₹${total.toFixed(2)}`);
+      setBuyingStatus(false);
+      setAmount(5);
+    }, 1500);
+  };
+
+  const handleListForSale = () => {
+    setSellingStatus(true);
+    setTimeout(() => {
+      alert(`✅ Successfully listed 5 kWh for sale earning ₹26.00 + 4 Carbon Credits`);
+      setSellingStatus(false);
+    }, 1500);
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -56,10 +75,28 @@ export default function BuySell() {
               <p className="text-3xl font-black text-neon-green">₹{total.toFixed(2)}</p>
             </div>
 
-            <button className="w-full bg-neon-green text-black font-black py-4 rounded-xl hover:shadow-glow-green transition-all uppercase text-sm tracking-widest flex items-center justify-center gap-2 group">
-              Complete Purchase
-              <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
-            </button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              disabled={buyingStatus}
+              onClick={handleCompletePurchase}
+              className="w-full bg-neon-green text-black font-black py-4 rounded-xl hover:shadow-glow-green transition-all uppercase text-sm tracking-widest flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {buyingStatus ? (
+                <>
+                  <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }}>
+                    <FiCheckCircle className="text-xl" />
+                  </motion.div>
+                  Processing...
+                </>
+              ) : (
+                <>
+                  <FiCheckCircle className="text-xl" />
+                  Complete Purchase
+                  <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
+            </motion.button>
           </div>
         </div>
       </motion.div>
@@ -110,10 +147,28 @@ export default function BuySell() {
               <p className="text-xs text-gray-500 mt-2">+ 4 Carbon Credits</p>
             </div>
 
-            <button className="w-full bg-neon-yellow text-black font-black py-4 rounded-xl hover:shadow-glow-yellow transition-all uppercase text-sm tracking-widest flex items-center justify-center gap-2 group">
-              List for Sale
-              <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
-            </button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              disabled={sellingStatus}
+              onClick={handleListForSale}
+              className="w-full bg-neon-yellow text-black font-black py-4 rounded-xl hover:shadow-glow-yellow transition-all uppercase text-sm tracking-widest flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {sellingStatus ? (
+                <>
+                  <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }}>
+                    <FiUploadCloud className="text-xl" />
+                  </motion.div>
+                  Processing...
+                </>
+              ) : (
+                <>
+                  <FiUploadCloud className="text-xl" />
+                  List for Sale
+                  <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
+            </motion.button>
           </div>
         </div>
       </motion.div>

@@ -60,8 +60,8 @@ interface Store {
   setCarbonWallet: (wallet: CarbonWallet) => void;
 
   // UI state
-  activeView: 'dashboard' | 'market' | 'history' | 'leaderboard' | 'analytics';
-  setActiveView: (view: 'dashboard' | 'market' | 'history' | 'leaderboard' | 'analytics') => void;
+  activeView: 'dashboard' | 'market' | 'history' | 'leaderboard' | 'analytics' | 'operations' | 'sync-grid' | 'grid-stability' | 'meters';
+  setActiveView: (view: 'dashboard' | 'market' | 'history' | 'leaderboard' | 'analytics' | 'operations' | 'sync-grid' | 'grid-stability' | 'meters') => void;
   isDisasterMode: boolean;
   setDisasterMode: (active: boolean) => void;
 

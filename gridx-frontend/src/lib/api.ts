@@ -184,4 +184,13 @@ export const api = {
   // Blockchain
   getTransactionStatus: (txHash: string) => 
     apiClient.get(`/api/blockchain/tx/${txHash}`),
+
+  // Grid Stability Engine
+  getGridMetrics: () => apiClient.get('/api/grid-stability/metrics'),
+  getDynamicPrice: () => apiClient.get('/api/grid-stability/dynamic-price'),
+  getAllocation: () => apiClient.get('/api/grid-stability/allocation'),
+  activateEmergencyMode: (data: any) => 
+    apiClient.post('/api/grid-stability/emergency-mode', data),
+  getGridForecast: () => apiClient.get('/api/grid-stability/forecast'),
+  getGridHealth: () => apiClient.get('/api/grid-stability/health'),
 };

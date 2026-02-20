@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useStore } from "@/lib/store";
-import { BiLeaf, BiPowerOff, BiGridAlt, BiHistory, BiTrophy, BiBarChartAlt2 } from "react-icons/bi";
-import { FiTrendingUp, FiZap } from "react-icons/fi";
+import { BiLeaf, BiPowerOff, BiGridAlt, BiHistory, BiTrophy, BiBarChartAlt2, BiServer, BiRefresh, BiNetworkChart } from "react-icons/bi";
+import { FiTrendingUp, FiZap, FiActivity } from "react-icons/fi";
 
 export default function Sidebar() {
   const { setDisasterMode, isDisasterMode, user, activeView, setActiveView, carbonWallet } = useStore();
@@ -47,6 +47,30 @@ export default function Sidebar() {
           label="Advanced Analytics"
           active={activeView === 'analytics'}
           onClick={() => setActiveView('analytics')}
+        />
+        <NavItem
+          icon={<BiServer />}
+          label="GridX Operations"
+          active={activeView === 'operations'}
+          onClick={() => setActiveView('operations')}
+        />
+        <NavItem
+          icon={<BiRefresh />}
+          label="Sync Grid"
+          active={activeView === 'sync-grid'}
+          onClick={() => setActiveView('sync-grid')}
+        />
+        <NavItem
+          icon={<BiNetworkChart />}
+          label="Grid Stability"
+          active={activeView === 'grid-stability'}
+          onClick={() => setActiveView('grid-stability')}
+        />
+        <NavItem
+          icon={<FiActivity />}
+          label="Smart Meters"
+          active={activeView === 'meters'}
+          onClick={() => setActiveView('meters')}
         />
       </nav>
 
