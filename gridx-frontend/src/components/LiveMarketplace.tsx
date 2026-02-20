@@ -130,13 +130,13 @@ export default function LiveMarketplace() {
       </div>
 
       {/* Total Cost */}
-      <div className="bg-gradient-to-r from-neon-cyan to-neon-cyan bg-opacity-10 rounded-lg p-3 mb-4 border border-neon-cyan border-opacity-30">
-        <p className="text-[10px] font-black text-gray-400 uppercase mb-2">Total Cost</p>
+      <div className="bg-gradient-to-r from-neon-cyan to-neon-cyan bg-opacity-20 rounded-lg p-4 mb-4 border-2 border-neon-cyan border-opacity-60">
+        <p className="text-[10px] font-black text-gray-300 uppercase mb-2">Total Cost</p>
         <motion.p
           key={totalCost}
           initial={{ scale: 1.15 }}
           animate={{ scale: 1 }}
-          className="text-2xl font-black text-neon-cyan"
+          className="text-3xl font-black text-neon-cyan"
         >
           ₹{totalCost}
         </motion.p>
